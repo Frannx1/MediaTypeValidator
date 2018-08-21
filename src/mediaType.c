@@ -7,7 +7,7 @@
 cathegoryType convertStringToType(char * string)
 {
     bool invalidType[TYPES_QTY] = {0};
-    cathegoryType validCategory;
+    cathegoryType validCategory = ERROR;
     size_t invalidQty = 0;
     size_t length = strlen(string) + 1;
 
@@ -22,13 +22,14 @@ cathegoryType convertStringToType(char * string)
                     invalidType[j] = true;
                     invalidQty++;
                 }
+                else
+                    validCategory = j;
                 if(invalidQty == TYPES_QTY)
                     return ERROR;
-                validCategory = j;
             }
         }
     }
-    
+
     return validCategory;
 }
 

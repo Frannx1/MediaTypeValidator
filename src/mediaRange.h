@@ -3,20 +3,17 @@
 
 #include "mediaType.h"
 
+
+typedef struct mediaRangeCDT * mediaRangeADT;
+
 typedef enum {CONTAINS, NOT_CONTAINS, BAD_FORMAT} result_t;
 
-typedef struct node_t {
-    char * subtype;
-    node_t * next;
-} node_t;
 
-typedef struct mediaRange_t {
-    node_t * map[TYPES_QTY];
-} mediaRange_t;
+mediaRangeADT createMediaRange(void);
 
-void addMediaType(mediaRange_t * mediaRange, const mediaType * mt);
+void addMediaType(mediaRangeADT mr, const mediaType mt);
 
-result_t containsMediaType(const mediaRange_t * mediaRange, const mediaType * mt);
+result_t containsMediaType(const mediaRangeADT mr, const mediaType mt);
 
 
 #endif

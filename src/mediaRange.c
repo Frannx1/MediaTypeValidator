@@ -3,29 +3,45 @@
 #include "mediaType.h"
 #include "mediaRange.h"
 
+
+typedef struct node_t {
+    char * subtype;
+    struct node_t * next;
+} node_t;
+
+typedef struct mediaRangeCDT {
+    node_t * map[TYPES_QTY];
+} mediaRangeCDT;
+
+
 static node_t * addRecursive(node_t * current, node_t * newNode);
 
 static int compareNodes(const node_t * current, const node_t * newNode);
 
 
-void addMediaType(mediaRange_t * mediaRange, const mediaType * mt)
+mediaRangeADT createMediaRange(void)
 {
-    node_t * newNode = malloc(sizeof(node_t));
-    strcpy(newNode->subtype, mt->subtype);
-    int c;
-    
-    mediaRange->map[mt->type] = addRecursive(mediaRange->map[mt->type], newNode);
+    return (mediaRangeADT) malloc(sizeof(mediaRangeCDT));
 }
 
-result_t containsMediaType(const mediaRange_t * mediaRange, const mediaType * mt)
+void addMediaType(mediaRangeADT mr, const mediaType mt)
 {
-	if(mt == NULL)
+    node_t * newNode = malloc(sizeof(node_t));
+    strcpy(newNode->subtype, mt.subtype);
+    int c;
+    
+    mr->map[mt.type] = addRecursive(mr->map[mt.type], newNode);
+}
+
+result_t containsMediaType(const mediaRangeADT mr, const mediaType mt)
+{
+	if(mt.type == ERROR)
 		return BAD_FORMAT;
 
-	node_t * current = mediaRange->map[mt->type];
+	node_t * current = mr->map[mt.type];
 	while(current != NULL)
 	{
-		if (current->subtype[0] == '*' || mt->subtype[0] == '*' || strcmp(current->subtype, mt->subtype) == 0)
+		if (current->subtype[0] == '*' || mt.subtype[0] == '*' || strcmp(current->subtype, mt.subtype) == 0)
 			return CONTAINS;
 		current = current->next;
 	}
@@ -62,3 +78,4 @@ static int compareNodes(const node_t * current, const node_t * newNode)
         
     return strcmp(current->subtype, newNode->subtype);
 }
+

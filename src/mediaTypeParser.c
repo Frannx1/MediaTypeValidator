@@ -29,9 +29,12 @@ typedef struct parserData {
     char * remaining;
     char * formedType;
     char * formedSubtype;
+    size_t sizeType;
+    size_t sizeSubtype;
 } parserData;
 
-void parseToMediaType(const char * string, mediaType * mt) {
+void parseToMediaType(const char * string, mediaType * mt) 
+{
     stateMachineADT sm = createStateMachine(stateTable, transitionTable);
     parserData data = {.remaining = string};
     initStateMachine(sm, STATE_TYPE, (void *) &data);

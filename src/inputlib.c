@@ -29,7 +29,7 @@ char ** splitInput(char * input, int * qty, char splitChar)
 		}
 	}
 	resp = (char **) realloc(resp, (respSize) * sizeof(*resp));
-	return vec;
+	return resp;
 }
 
 

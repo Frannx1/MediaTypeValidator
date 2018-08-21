@@ -1,39 +1,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "mediaType.h"
+#include "mediaRange.h"
 #include "mediaTypeParser.h"
 
+
+#define BUFFER_LENGTH 256
+
 #define CLEAN_BUFFER { int MACc; while ((MACc = getchar()) != '\n' && MACc != EOF); }
+
+
+void parseAndMapMediaTypes(mediaRangeADT mediaRange, const char ** input, const size_t qty);
+
+void readAndValidateMediaTypes(const mediaRangeADT mediaRange);
 
 
 int main(int argc, char * argv[])
 {
     checkAreEquals(argc, 2, "Invalid Arguments.");
-    int qty = 0;
+    size_t qty = 0;
     char * input = argv[1];
     char ** splitedInput = splitInput(input, &qty, ',');
 
-    mediaRange_t mediaRange;
-    parseAndMapMediaTypes(&mediaRange, splitedInput, qty)
-    readAndValidateMediaTypes(&mediaRange);
+    mediaRangeADT mediaRange = createMediaRange();
+    parseAndMapMediaTypes(mediaRange, splitedInput, qty);
+    readAndValidateMediaTypes(mediaRange);
 
     return 0;
 }
 
-void parseAndMapMediaTypes(mediaRange_t * mediaRange, const char ** input, const int qty)
+void parseAndMapMediaTypes(mediaRangeADT mediaRange, const char ** input, const size_t qty)
 {
     for (int i = 0; i < qty; i++)
     {
         mediaType mt;
-        parseToMediaType(parsedInput[i], &mt);
+        parseToMediaType(input[i], &mt);
         checkNotNull(mt, "Not valid media-type format inserted in the media-range.");
         addMediaType(mediaRange, mt);
     }
 }
 
-void readAndValidateMediaTypes(const mediaRange_t * mediaRange)
+void readAndValidateMediaTypes(const mediaRangeADT mediaRange)
 {
-    char buffer[BUFFER_LENGTH]
+    char buffer[BUFFER_LENGTH];
     mediaType mt;
     while(1)
     {
