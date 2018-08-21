@@ -1,10 +1,19 @@
 #ifndef STATE_MACHINE_H
 #define STATE_MACHINE_H
 
+#include <stdbool.h>
+
 /**
  *	Maquina de estados generica
  */
-typedef stateMachineCDT * stateMachineADT;
+
+typedef struct stateMachineCDT * stateMachineADT;
+
+typedef int stateFunc_t(void * data);
+
+typedef void transitionFunc_t(void * data);
+
+typedef bool isDoneFunc(void * data);
 
 /**
  *	Parametros para su construccion:
@@ -20,15 +29,7 @@ typedef stateMachineCDT * stateMachineADT;
  *					 rellenar con NULL.
  */
 
-typedef int stateFunc_t(void * data);
-
-typedef void transitionFunc_t(void * data);
-
-typedef bool isDoneFunc(void * data);
-
-
-stateMachineADT createStateMachine(isDoneFunc * isDone, 
-			  stateFunc_t ** stateTable, transitionFunc_t *** transitionTable);
+stateMachineADT createStateMachine(stateFunc_t ** stateTable, transitionFunc_t *** transitionTable);
 
 void initStateMachine(stateMachineADT sm, int stateQ0, void * data);
 
