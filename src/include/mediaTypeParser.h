@@ -2,9 +2,10 @@
 #define MEDIA_TYPE_PARSER_H
 
 #include "mediaType.h"
+#include <stdbool.h>
 
 
-bool parseToMediaType(const char * string, mediaType * mt) 
+char * parseToMediaType(const char * string, mediaType * mt);
 
 
 #endif

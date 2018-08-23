@@ -5,7 +5,6 @@
 typedef struct stateMachineCDT {
     void * data;
     int state; 
-    isDoneFunc * isDone;
 	stateFunc_t ** stateTable;
 	transitionFunc_t *** transitionTable;
 } stateMachineCDT;
@@ -16,7 +15,6 @@ stateMachineADT createStateMachine(stateFunc_t ** stateTable, transitionFunc_t *
 	stateMachineADT sm = malloc(sizeof(stateMachineCDT));
 	sm->state = 0;
 	sm->data = NULL;
-	//sm->isDone = isDone;
 	sm->stateTable = stateTable;
 	sm->transitionTable = transitionTable;
 
@@ -39,7 +37,7 @@ void * getData(stateMachineADT sm)
 	return sm->data;
 }
 
-int runState(stateMachineADT sm) 
+int feedStateMachine(stateMachineADT sm) 
 {
     int newState = sm->stateTable[sm->state](sm->data);
 

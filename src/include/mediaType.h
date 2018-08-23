@@ -3,14 +3,14 @@
 
 
 typedef enum {APPLICATION, AUDIO, MULTIPART, TEXT, IMAGE, FONT, 
-                                   VIDEO, TYPES_QTY, ERROR = -1} cathegoryType;
+                                   VIDEO, TYPES_QTY, ERROR_TYPE = -1} categoryType;
 
-char * const cathegoryTypeTable[TYPES_QTY] = {
+char * const categoryTypeTable[TYPES_QTY] = {
     "APPLICATION", "AUDIO", "MULTIPART", "TEXT", "IMAGE", "FONT", "VIDEO"
 };
 
 typedef struct mediaType {
-    cathegoryType type;
+    categoryType type;
     char * subtype;
 } mediaType;
 
@@ -19,7 +19,7 @@ typedef struct mediaType {
  * segun la table de catogorias de tipos.
  * Es case-insensitive
  */
-cathegoryType convertStringToType(char * string);
+categoryType convertStringToType(char * string);
 
 
 #endif

@@ -13,13 +13,8 @@ typedef int stateFunc_t(void * data);
 
 typedef void transitionFunc_t(void * data);
 
-typedef bool isDoneFunc(void * data);
-
 /**
  *	Parametros para su construccion:
- *
- *	isDone: funcion que dado un estado retorna un boolean:true 
- *			si este es terminal.
  *
  *   stateTable: vector de funciones que dado los datos provistos
  *				retorne el estado que alcanza.
@@ -41,7 +36,7 @@ void * getData(stateMachineADT sm);
  *	Funcion para correr la maquina de estados
  *	Devuelve el estado alcanzado
  */
-int runState(stateMachineADT sm);
+int feedStateMachine(stateMachineADT sm);
 
 
 #endif

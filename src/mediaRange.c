@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "mediaType.h"
 #include "mediaRange.h"
 
@@ -28,14 +29,13 @@ void addMediaType(mediaRangeADT mr, const mediaType mt)
 {
     node_t * newNode = malloc(sizeof(node_t));
     strcpy(newNode->subtype, mt.subtype);
-    int c;
     
     mr->map[mt.type] = addRecursive(mr->map[mt.type], newNode);
 }
 
 result_t containsMediaType(const mediaRangeADT mr, const mediaType mt)
 {
-	if(mt.type == ERROR)
+	if(mt.type == ERROR_TYPE)
 		return BAD_FORMAT;
 
 	node_t * current = mr->map[mt.type];
@@ -48,9 +48,10 @@ result_t containsMediaType(const mediaRangeADT mr, const mediaType mt)
 	return NOT_CONTAINS;
 }
 
+
 /*
-* Funciones de una lista ordenada
-*/
+ * Funciones de una lista ordenada
+ */
 
 static node_t * addRecursive(node_t * current, node_t * newNode)
 {
