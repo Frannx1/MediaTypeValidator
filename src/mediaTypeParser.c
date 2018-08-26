@@ -83,9 +83,10 @@ static char * convertDataToMediaType(parserData * data, mediaType * mt)
                 mt->subtype = data->formedSubtype;
             break;
     }
-    if(mt->type == ERROR_TYPE)
+    if(data->error == TYPE_ERROR)
+        free(data->formedType);
+    if(data->error == SUBTYPE_ERROR)
         free(data->formedSubtype);
-    free(data->formedType);
     return ret;
 }
 

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdarg.h>
 #include "stringlib.h"
 
 #define BLOCK 10
@@ -56,5 +57,22 @@ void fixSize(void ** vec, size_t size, size_t nbytes)
 {
 	if(size != 0)
 		*vec = realloc(*vec, size * nbytes);
+}
+
+void freeSplitedString(char ** splitedString, size_t qty)
+{
+	for(size_t i = 0; i < qty; i++)
+		free(splitedString[i]);
+}
+
+void freeSpace(int qty, ...) 
+{
+	va_list args;
+    va_start(args, qty);
+
+    for (int i = 0; i < qty; i++)
+        free(va_arg(args, void *));
+
+    va_end(args);
 }
 

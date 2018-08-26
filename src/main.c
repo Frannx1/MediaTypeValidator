@@ -24,8 +24,9 @@ int main(int argc, char * argv[])
     
     mediaRangeADT mediaRange = createMediaRange();
     parseAndMapMediaTypes(mediaRange, splitedInput, qty);
-    readAndValidateMediaTypes(mediaRange);
+    freeSplitedString(splitedInput, qty);
 
+    readAndValidateMediaTypes(mediaRange);
     deleteMediaRange(mediaRange);
     return 0;
 }
@@ -50,13 +51,15 @@ void readAndValidateMediaTypes(const mediaRangeADT mediaRange)
     {
         scanf("%256s", buffer);
         parseToMediaType(buffer, &mt);
-        char * resp;
+        char * resp = "false";
         if(mt.type == ERROR_TYPE)
             resp = "null";
-        else if(containsMediaType(mediaRange, mt))
-            resp = "true";
-        else   
-            resp = "false";
+        else 
+        {
+            free(mt.subtype);
+            if(containsMediaType(mediaRange, mt))
+                resp = "true";
+        }
         printf("%s\n", resp);
 
         CLEAN_BUFFER

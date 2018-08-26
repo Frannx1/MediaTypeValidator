@@ -18,6 +18,10 @@ void checkSize(void ** vec, size_t size, size_t block, size_t nbytes);
 
 void fixSize(void ** vec, size_t size, size_t nbytes);
 
+void freeSplitedString(char ** splitedString, size_t qty);
+
+void freeSpace(int qty, ...);
+
 
 #endif
 
