@@ -24,7 +24,9 @@ typedef void transitionFunc_t(void * data);
  *					 rellenar con NULL.
  */
 
-stateMachineADT createStateMachine(stateFunc_t ** stateTable, transitionFunc_t *** transitionTable);
+stateMachineADT createStateMachine(stateFunc_t ** stateTable, transitionFunc_t *** transitionTable, int stateQty);
+
+void deleteStateMachine(stateMachineADT sm);
 
 void initStateMachine(stateMachineADT sm, int stateQ0, void * data);
 

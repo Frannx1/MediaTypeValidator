@@ -20,13 +20,13 @@ int main(int argc, char * argv[])
 {
     checkAreEquals(argc, 2, "Invalid Arguments.");
     size_t qty = 0;
-    char * input = argv[1];
-    char ** splitedInput = splitString(input, &qty, ',');
-
+    char ** splitedInput = splitString(argv[1], &qty, ',');
+    
     mediaRangeADT mediaRange = createMediaRange();
     parseAndMapMediaTypes(mediaRange, splitedInput, qty);
     readAndValidateMediaTypes(mediaRange);
 
+    deleteMediaRange(mediaRange);
     return 0;
 }
 
@@ -51,18 +51,12 @@ void readAndValidateMediaTypes(const mediaRangeADT mediaRange)
         scanf("%256s", buffer);
         parseToMediaType(buffer, &mt);
         char * resp;
-        switch(containsMediaType(mediaRange, mt))
-        {
-        	case CONTAINS:
-        		resp = "true";
-        		break;
-        	case NOT_CONTAINS:
-        		resp = "false";
-        		break;	
-        	case BAD_FORMAT:
-        		resp = "null";
-        		break;	
-        }
+        if(mt.type == ERROR_TYPE)
+            resp = "null";
+        else if(containsMediaType(mediaRange, mt))
+            resp = "true";
+        else   
+            resp = "false";
         printf("%s\n", resp);
 
         CLEAN_BUFFER

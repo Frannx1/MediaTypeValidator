@@ -5,10 +5,6 @@
 typedef enum {APPLICATION, AUDIO, MULTIPART, TEXT, IMAGE, FONT, 
                                    VIDEO, TYPES_QTY, ERROR_TYPE = -1} categoryType;
 
-char * const categoryTypeTable[TYPES_QTY] = {
-    "APPLICATION", "AUDIO", "MULTIPART", "TEXT", "IMAGE", "FONT", "VIDEO"
-};
-
 typedef struct mediaType {
     categoryType type;
     char * subtype;

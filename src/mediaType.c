@@ -4,6 +4,10 @@
 #include <string.h>
 #include <ctype.h>
 
+char * const categoryTypeTable[TYPES_QTY] = {
+    "APPLICATION", "AUDIO", "MULTIPART", "TEXT", "IMAGE", "FONT", "VIDEO"
+};
+
 categoryType convertStringToType(char * string)
 {
     bool invalidType[TYPES_QTY] = {0};

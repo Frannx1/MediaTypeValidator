@@ -50,14 +50,14 @@ transitionFunc_t * const transitionTable[NUM_STATES][NUM_STATES] = {
 char * parseToMediaType(char * string, mediaType * mt) 
 {
     stateMachineADT sm = createStateMachine((stateFunc_t **) stateTable, 
-                                       (transitionFunc_t ***) transitionTable);         
+                           (transitionFunc_t ***) transitionTable, NUM_STATES);         
     parserData data = {.remaining = string, .sizeType = 0, .sizeSubtype = 0,
                                                             .error = NO_ERROR};
     initStateMachine(sm, STATE_TYPE, (void *) &data);
-
     while(!isDone(getState(sm) ,&data)) 
         feedStateMachine(sm);
 
+    deleteStateMachine(sm);
     char * ret = convertDataToMediaType(&data, mt);
     return ret;
 }
@@ -83,6 +83,9 @@ static char * convertDataToMediaType(parserData * data, mediaType * mt)
                 mt->subtype = data->formedSubtype;
             break;
     }
+    if(mt->type == ERROR_TYPE)
+        free(data->formedSubtype);
+    free(data->formedType);
     return ret;
 }
 
@@ -108,11 +111,9 @@ static int doStateSubtype(void * data)
 {
     parserData * myData = (parserData *) data;
     char c = myData->remaining[0];
-    if(isalpha(c))
-        return STATE_SUBTYPE;
     if(c == 0)
         return STATE_DONE;
-    return STATE_ERROR;
+    return STATE_SUBTYPE;
 }
 
 static int doStateDone(void * data)
